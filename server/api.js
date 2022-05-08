@@ -74,7 +74,7 @@ async function runMainApi() {
         return res.json(result)
     })
 
-    // HTTP GET api that returns all the cats in our fake database
+    // HTTP GET api that returns all the cats in our actual database
     app.get("/cats", async (req, res) => {
         const result = await models.Cat.findAll()
         const filtered = []
@@ -89,11 +89,11 @@ async function runMainApi() {
         return res.json(filtered)
     })
 
-    // HTTP POST apio that will push (and therefore create) a new element in 
-    // our fake database 
-    app.post("/cats", (req, res) => {
+    // HTTP POST api, that will push (and therefore create) a new element in
+    // our actual database
+    app.post("/cats", async (req, res) => {
         const { body } = req
-        catList.push(body)
+        await models.Cat.create(body);
         return res.sendStatus(200)
     })
 }

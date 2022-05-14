@@ -20,7 +20,7 @@ const database = new Sequelize("postgres://postgres:postgres@localhost:5432/hyp"
 // Function that will initialize the connection to the database
 async function initializeDatabaseConnection() {
     await database.authenticate()
-    const Cat = database.define("cat", {
+    const Event = database.define("event", {
         name: DataTypes.STRING,
         description: DataTypes.STRING,
         breed: DataTypes.STRING,
@@ -30,11 +30,11 @@ async function initializeDatabaseConnection() {
         name: DataTypes.STRING,
         city: DataTypes.STRING,
     })
-    Location.hasMany(Cat)
-    Cat.belongsTo(Location)
+    Location.hasMany(Event)
+    Event.belongsTo(Location)
     await database.sync({ force: true })
     return {
-        Cat,
+        Event,
         Location
     }
 }
@@ -68,15 +68,15 @@ async function runMainApi() {
         return res.json(result)
     })
 
-    app.get('/cats/:id', async (req, res) => {
+    app.get('/events/:id', async (req, res) => {
         const id = +req.params.id
-        const result = await models.Cat.findOne({ where: { id }, include: [{model: models.Location}] })
+        const result = await models.Event.findOne({ where: { id }, include: [{model: models.Location}] })
         return res.json(result)
     })
 
     // HTTP GET api that returns all the cats in our actual database
-    app.get("/cats", async (req, res) => {
-        const result = await models.Cat.findAll()
+    app.get("/events", async (req, res) => {
+        const result = await models.Event.findAll()
         const filtered = []
         for (const element of result) {
             filtered.push({
@@ -91,9 +91,9 @@ async function runMainApi() {
 
     // HTTP POST api, that will push (and therefore create) a new element in
     // our actual database
-    app.post("/cats", async (req, res) => {
+    app.post("/events", async (req, res) => {
         const { body } = req
-        await models.Cat.create(body);
+        await models.Event.create(body);
         return res.sendStatus(200)
     })
 }

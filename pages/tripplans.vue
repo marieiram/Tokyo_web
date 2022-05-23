@@ -2,9 +2,10 @@
   <div class="page container mt-5">
     <!-- <h1 class="display-4">Events</h1> -->
     <div class="row mt-3">
-          <h1 class="display-4">Events</h1>
+          <h1 class="display-4">Trip plans
+          </h1>
       <list-page 
-      :List=eventList
+      :List=tripplansList
       />
     </div>
   </div>
@@ -14,7 +15,7 @@
 // import Card from '~/components/Card.vue'
 import ListPage from '~/components/ListPage.vue'
 export default {
-  name: 'ListEvents',
+  name: 'ListTripplan',
   components: {
 //     Card,
     ListPage,
@@ -22,9 +23,9 @@ export default {
 
 
 async asyncData({ $axios }) {
-    const { data } = await $axios.get('/api/events')
+    const { data } = await $axios.get('/api/tripplans')
     return {
-      eventList: data,
+      tripplansList: data,
     }
   },
   

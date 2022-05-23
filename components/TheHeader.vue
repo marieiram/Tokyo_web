@@ -48,11 +48,11 @@ export default {
         },
          {
           name: 'Things to go',
-          path: '/things to go',
+          path: '/thingstogo',
         },
          {
-          name: 'Trip plan',
-          path: '/trip plans',
+          name: 'Trip plans',
+          path: '/tripplans',
         },
          {
           name: 'Services',

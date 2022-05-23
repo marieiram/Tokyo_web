@@ -6,9 +6,9 @@
     ></div>
     <div class="card-body">
       <h5 class="card-title">{{ name }}</h5>
-      <p class="card-text">
+      <!-- <p class="card-text">
         {{ breed }}
-      </p>
+      </p> -->
       <nuxt-link :to="`/Eventdetails/${id}`">
         <div class="btn btn-primary btn-orange">See Details</div>
       </nuxt-link>
@@ -31,10 +31,10 @@ export default {
       type: Number,
       required: true,
     },
-    breed: {
-      type: String,
-      required: true,
-    },
+    // breed: {
+    //   type: String,
+    //   required: true,
+    // },
   },
   methods: {
     goToDetails() {

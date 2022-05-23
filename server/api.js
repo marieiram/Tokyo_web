@@ -26,6 +26,21 @@ async function initializeDatabaseConnection() {
         breed: DataTypes.STRING,
         img: DataTypes.STRING,
     })
+
+    const ThingToGo= database.define("thingtogo", {
+        name: DataTypes.STRING,
+        description: DataTypes.STRING,
+        breed: DataTypes.STRING,
+        img: DataTypes.STRING,
+    })
+
+    const TripPlan= database.define("tripplan", {
+        name: DataTypes.STRING,
+        description: DataTypes.STRING,
+        breed: DataTypes.STRING,
+        img: DataTypes.STRING,
+    })
+
     const Location  = database.define("location", {
         name: DataTypes.STRING,
         city: DataTypes.STRING,
@@ -35,6 +50,8 @@ async function initializeDatabaseConnection() {
     await database.sync({ force: true })
     return {
         Event,
+        ThingToGo,
+        TripPlan,
         Location
     }
 }
@@ -89,6 +106,35 @@ async function runMainApi() {
         return res.json(filtered)
     })
 
+      // HTTP GET api that returns all the cats in our actual database
+      app.get("/thingstogo", async (req, res) => {
+        const result = await models.ThingToGo.findAll()
+        const filtered = []
+        for (const element of result) {
+            filtered.push({
+                name: element.name,
+                img: element.img,
+                breed: element.breed,
+                id: element.id,
+            })
+        }
+        return res.json(filtered)
+    })
+
+    app.get("/tripplans", async (req, res) => {
+        const result = await models.TripPlan.findAll()
+        const filtered = []
+        for (const element of result) {
+            filtered.push({
+                name: element.name,
+                img: element.img,
+                breed: element.breed,
+                id: element.id,
+            })
+        }
+        return res.json(filtered)
+    })
+
     // HTTP POST api, that will push (and therefore create) a new element in
     // our actual database
     app.post("/events", async (req, res) => {
@@ -96,7 +142,21 @@ async function runMainApi() {
         await models.Event.create(body);
         return res.sendStatus(200)
     })
+
+    app.post("/thingstogo", async (req, res) => {
+        const { body } = req
+        await models.ThingToGo.create(body);
+        return res.sendStatus(200)
+    })
+
+    app.post("/tripplans", async (req, res) => {
+        const { body } = req
+        await models.TripPlan.create(body);
+        return res.sendStatus(200)
+    })
 }
+
+
 
 runMainApi()
 
